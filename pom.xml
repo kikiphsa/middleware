@@ -9,6 +9,8 @@
         <module>dubbo-provider</module>
         <module>dubbo-consumer</module>
         <module>dubbo-interface</module>
+        <module>springioc</module>
+        <module>spring/spring-ioc</module>
     </modules>
     <packaging>pom</packaging>
 
