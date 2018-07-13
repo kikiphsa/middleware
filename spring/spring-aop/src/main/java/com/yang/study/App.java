@@ -1,16 +1,14 @@
 package com.yang.study;
 
-import com.yang.study.bean.Hello;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * Hello world!
- */
+import com.yang.study.interfaces.Happy;
+
 public class App {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        Hello hello = context.getBean("hello", Hello.class);
-        System.out.println(hello.getName());
+        Happy scu = context.getBean("scu", Happy.class);
+        System.out.println(scu.getClass());
     }
 }
