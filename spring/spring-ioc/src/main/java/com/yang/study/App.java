@@ -12,5 +12,6 @@ public class App {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         Hello hello = context.getBean("hello", Hello.class);
         System.out.println(hello.getName());
+        ((ClassPathXmlApplicationContext) context).close();
     }
 }

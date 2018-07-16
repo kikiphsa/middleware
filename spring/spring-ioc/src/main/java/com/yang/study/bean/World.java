@@ -6,12 +6,20 @@ package com.yang.study.bean;
 public class World {
 
     private String word;
-
+    private Hello hello;
     public String getWord() {
         return word;
     }
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public Hello getHello() {
+        return hello;
+    }
+
+    public void setHello(Hello hello) {
+        this.hello = hello;
     }
 }

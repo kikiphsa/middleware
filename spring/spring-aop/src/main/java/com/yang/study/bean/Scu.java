@@ -15,6 +15,10 @@ import com.yang.study.interfaces.Happy;
  */
 public class Scu implements Happy {
 
+    public Scu(){
+        System.out.println("Construct Scu......");
+    }
+
     private int rank;
 
     public int getRank() {
@@ -22,6 +26,7 @@ public class Scu implements Happy {
     }
 
     public void setRank(int rank) {
+        System.out.println("setter......");
         this.rank = rank;
     }
 

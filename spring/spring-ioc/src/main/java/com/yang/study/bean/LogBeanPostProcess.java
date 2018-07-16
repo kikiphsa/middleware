@@ -9,19 +9,13 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public class LogBeanPostProcess implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object o, String s) throws BeansException {
-        if (o instanceof Hello) {
-            System.out.println("postProcessBeforeInitialization");
-            System.out.println(s);
-        }
+        System.out.println("postProcessBeforeInitialization,beanName=" + s);
         return o;
     }
 
     @Override
     public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
-        if (o instanceof Hello) {
-            System.out.println("postProcessAfterInitialization");
-            System.out.println(s);
-        }
+        System.out.println("postProcessAfterInitialization,beanName=" + s);
         return o;
     }
 }

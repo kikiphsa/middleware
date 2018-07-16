@@ -1,21 +1,23 @@
 package com.yang.study.bean;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.*;
 
 /**
  * Created by fuyang on 2018/6/30.
  */
-public class Hello implements InitializingBean,BeanFactoryAware,BeanNameAware{
+public class Hello implements InitializingBean, BeanFactoryAware, BeanNameAware, DisposableBean {
 
     private String name;
-    private World world;
+    private World  world;
+
+    public Hello(String name) {
+        this.name = name;
+        System.out.println("Construct args.......");
+    }
 
     public Hello() {
         System.out.println("Construct.......");
@@ -30,13 +32,22 @@ public class Hello implements InitializingBean,BeanFactoryAware,BeanNameAware{
         this.name = name;
     }
 
-    public void init(){
+    public void destorys() {
+        System.out.println("destory......");
+    }
+
+    public void init() {
         System.out.println("init......");
     }
 
     @PostConstruct
-    public void postConstruct(){
+    public void postConstruct() {
         System.out.println("postConstruct......");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        System.out.println("preDestroy......");
     }
 
     @Override
@@ -46,12 +57,12 @@ public class Hello implements InitializingBean,BeanFactoryAware,BeanNameAware{
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        System.out.println("beanFactory="+beanFactory);
+        System.out.println("beanFactory=" + beanFactory);
     }
 
     @Override
     public void setBeanName(String s) {
-        System.out.println("beanName="+s);
+        System.out.println("beanName=" + s);
     }
 
     public World getWorld() {
@@ -60,5 +71,10 @@ public class Hello implements InitializingBean,BeanFactoryAware,BeanNameAware{
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("disposableBean......");
     }
 }
