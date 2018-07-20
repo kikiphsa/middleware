@@ -12,4 +12,16 @@
         <property name="rank" value="6"/>
     </bean>
     <bean id="myAspect" class="com.yang.study.apsect.MyAspect"/>
+    <bean id="aspect" class="com.yang.study.apsect.AspectTwo"/>
+    <bean id="sample" class="com.yang.study.bean.Sample">
+        <property name="name" value="test"/>
+    </bean>
+    
+    <aop:config proxy-target-class="true">
+        <aop:aspect id="aspect" ref="myAspect">
+            <aop:pointcut id="pointcut" expression="execution(* com.yang.study.bean.*.*(..))"/>
+            <aop:before method="before" pointcut-ref="pointcut"/>
+            <aop:after method="after" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
 </beans>
