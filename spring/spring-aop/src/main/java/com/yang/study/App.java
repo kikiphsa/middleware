@@ -12,7 +12,7 @@ public class App {
         Happy scu = context.getBean("scu", Happy.class);
         System.out.println(scu.getClass());
         System.out.println(scu.happy());
-        Sample sample=context.getBean(Sample.class);
-        System.out.println(sample.getName());
+//        Sample sample=context.getBean(Sample.class);
+//        System.out.println(sample.getName());
     }
 }

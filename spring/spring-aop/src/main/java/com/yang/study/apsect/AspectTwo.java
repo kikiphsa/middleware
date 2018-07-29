@@ -3,7 +3,6 @@
  */
 package com.yang.study.apsect;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
@@ -13,8 +12,9 @@ import org.aspectj.lang.annotation.*;
  */
 @Aspect
 public class AspectTwo {
-    @Pointcut("execution(* com.yang.study.bean.*.*(..))")
-    public void pointCut() {}
+    @Pointcut("execution(* com.yang.study.bean.Scu.*(..))")
+    public void pointCut() {
+    }
 
     @Before("pointCut()")
     public void before() {
@@ -33,8 +33,13 @@ public class AspectTwo {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("around...");
-        return joinPoint.proceed();
+        try {
+            System.out.println("around befoe...");
+            Object object = joinPoint.proceed();
+            return object;
+        } finally {
+            System.out.println("around after...");
+        }
     }
 
     @AfterThrowing("pointCut()")

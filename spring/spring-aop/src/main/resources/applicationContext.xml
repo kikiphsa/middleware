@@ -19,7 +19,7 @@
     
     <aop:config proxy-target-class="true">
         <aop:aspect id="aspect" ref="myAspect">
-            <aop:pointcut id="pointcut" expression="execution(* com.yang.study.bean.*.*(..))"/>
+            <aop:pointcut id="pointcut" expression="execution(* com.yang.study.bean.Scu.*(..))"/>
             <aop:before method="before" pointcut-ref="pointcut"/>
             <aop:after method="after" pointcut-ref="pointcut"/>
         </aop:aspect>

@@ -9,8 +9,6 @@ package com.yang.study.apsect;
  */
 public class MyAspect {
 
-    public void pointCut() {}
-
     public void before() {
         System.out.println("before one......");
     }

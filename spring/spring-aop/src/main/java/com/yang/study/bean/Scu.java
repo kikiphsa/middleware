@@ -3,8 +3,6 @@
  */
 package com.yang.study.bean;
 
-import java.io.Serializable;
-
 import com.yang.study.interfaces.Happy;
 
 /**
@@ -31,6 +29,6 @@ public class Scu implements Happy {
     }
 
     public String happy() {
-        return "scu happy!";
+        return "scu happy!"+1/0;
     }
 }
