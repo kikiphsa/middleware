@@ -6,7 +6,8 @@ package com.yang.study.bean;
 public class World {
 
     private String word;
-    private Hello hello;
+    private Hello  hello;
+
     public String getWord() {
         return word;
     }
@@ -21,5 +22,14 @@ public class World {
 
     public void setHello(Hello hello) {
         this.hello = hello;
+    }
+
+    public World(Hello hello, String word) {
+        this.word = word;
+        this.hello = hello;
+    }
+
+    public World(){
+
     }
 }

@@ -14,6 +14,11 @@ public class Hello implements InitializingBean, BeanFactoryAware, BeanNameAware,
     private String name;
     private World  world;
 
+    public Hello(String name, World world) {
+        this.name = name;
+        this.world = world;
+    }
+
     public Hello(String name) {
         this.name = name;
         System.out.println("Construct args.......");

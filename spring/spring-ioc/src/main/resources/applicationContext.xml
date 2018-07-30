@@ -2,17 +2,76 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       default-autowire="byType"
+       default-autowire="byName"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config/>
 
     <bean id="beanFactoryProcessor" class="com.yang.study.bean.LogBeanFactoryProcess"/>
+
     <bean id="beanProcessor" class="com.yang.study.bean.LogBeanPostProcess"/>
+
     <bean id="hello" class="com.yang.study.bean.Hello" init-method="init" destroy-method="destorys">
         <property name="name" value="fuyang"/>
+        <property name="world" ref="world"/>
     </bean>
+
+    <bean id="worlds" class="com.yang.study.bean.World">
+        <constructor-arg index="0" ref="hellos"/>
+        <constructor-arg index="1" value="world"/>
+    </bean>
+
+    <bean id="hellos" class="com.yang.study.bean.Hello" init-method="init" destroy-method="destorys">
+        <constructor-arg index="0" value="world"/>
+        <constructor-arg index="1" ref="world"/>
+    </bean>
+
     <bean id="world" class="com.yang.study.bean.World">
-        <property name="word" value="world"/>
-        <property name="hello" ref="hello"/>
+        <property name="word">
+            <value>world</value>
+        </property>
+        <property name="hello">
+            <ref bean="hello"/>
+        </property>
     </bean>
+
+    <bean id="collectionBean" class="com.yang.study.collection.CollectionBean">
+        <property name="time" value="DAY"/>
+        <property name="arrays">
+           <list>
+               <value>a</value>
+               <value>b</value>
+               <value>c</value>
+               <ref bean="world"/>
+           </list>
+        </property>
+        <property name="list">
+            <list>
+                <value>a</value>
+                <value>a</value>
+                <value>a</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>a</value>
+                <value>b</value>
+                <value>c</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="a" value="a"></entry>
+                <entry key="b" value="b"></entry>
+                <entry key="c" value="ac"></entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="a">a</prop>
+                <prop key="b">b</prop>
+                <prop key="c">a</prop>
+            </props>
+        </property>
+    </bean>
+
 </beans>
