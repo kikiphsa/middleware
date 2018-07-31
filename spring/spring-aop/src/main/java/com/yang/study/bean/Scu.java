@@ -29,6 +29,6 @@ public class Scu implements Happy {
     }
 
     public String happy() {
-        return "scu happy!"+1/0;
+        return "scu happy!";
     }
 }

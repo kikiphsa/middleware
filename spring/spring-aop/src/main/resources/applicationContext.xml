@@ -8,20 +8,28 @@
 
     <aop:aspectj-autoproxy/>
 
+    <bean id="aopBean" class="com.yang.study.bean.AopBean">
+        <property name="scu" ref="scu"/>
+    </bean>
+
     <bean id="scu" class="com.yang.study.bean.Scu">
         <property name="rank" value="6"/>
     </bean>
+
     <bean id="myAspect" class="com.yang.study.apsect.MyAspect"/>
+
     <bean id="aspect" class="com.yang.study.apsect.AspectTwo"/>
+
     <bean id="sample" class="com.yang.study.bean.Sample">
         <property name="name" value="test"/>
     </bean>
     
-    <aop:config proxy-target-class="true">
+    <aop:config>
         <aop:aspect id="aspect" ref="myAspect">
             <aop:pointcut id="pointcut" expression="execution(* com.yang.study.bean.Scu.*(..))"/>
             <aop:before method="before" pointcut-ref="pointcut"/>
             <aop:after method="after" pointcut-ref="pointcut"/>
         </aop:aspect>
     </aop:config>
+
 </beans>
