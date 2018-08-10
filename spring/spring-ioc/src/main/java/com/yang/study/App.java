@@ -35,13 +35,13 @@ public class App {
         System.out.println(world.getHello());
     }
 
-    public static void testCircleDependency(ApplicationContext context){
-
-
+    public static void testAutowire(ApplicationContext context){
+        CollectionBean collectionBean=context.getBean(CollectionBean.class);
+        System.out.println(collectionBean.getWorld().getWord());
     }
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        testCollenction(context);
+        testAutowire(context);
     }
 }

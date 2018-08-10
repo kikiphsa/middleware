@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.yang.study.bean.LogBeanPostProcess;
+import com.yang.study.bean.World;
+
 /**
  * @author fuyang
  * @version $Id: CollectionBean.java, v 0.1 2018年07月30日 下午12:14 fuyang Exp $
@@ -20,7 +23,8 @@ public class CollectionBean {
     private Object[]            arrays;
     private Set<Object>         set;
     private Map<String, Object> map;
-    private Properties properties;
+    private Properties          properties;
+    private World               world;
 
     /**
      * Getter method for property <tt>properties</tt>.
@@ -120,5 +124,23 @@ public class CollectionBean {
      */
     public void setMap(Map<String, Object> map) {
         this.map = map;
+    }
+
+    /**
+     * Getter method for property <tt>world</tt>.
+     *
+     * @return property value of world
+     */
+    public World getWorld() {
+        return world;
+    }
+
+    /**
+     * Setter method for property <tt>world</tt>.
+     *
+     * @param world value to be assigned to property world
+     */
+    public void setWorld(World world) {
+        this.world = world;
     }
 }
