@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yang.study.dao.userDao">
+<mapper namespace="com.yang.study.dao.UserDao">
 
-    <resultMap id="user" type="com.home.entities.User">
+    <resultMap id="user" type="com.yang.study.bean.Users">
         <result column="user_name" property="userName" />
         <result column="age" property="age" />
     </resultMap>
 
-    <select id="getUserByName" resultMap="user">
-		select user_name,age from user;
+    <select id="getUserByName" parameterType="java.lang.String" resultMap="user">
+		select user_name,age from users where user_name=#{userName};
 	</select>
 
-    <insert id="insert">
-
+    <insert id="insert" useGeneratedKeys="true">
+        insert into users(user_name,age) values(#{userName},#{age});
     </insert>
 </mapper>

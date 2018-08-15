@@ -2,7 +2,9 @@ package com.yang.study;
 
 import java.util.Arrays;
 
+import com.yang.study.bean.Cat;
 import com.yang.study.bean.Hello;
+import com.yang.study.bean.Mouse;
 import com.yang.study.bean.World;
 import com.yang.study.collection.CollectionBean;
 import com.yang.study.collection.Time;
@@ -40,8 +42,12 @@ public class App {
         System.out.println(collectionBean.getWorld().getWord());
     }
 
+    public static void testAuthroize(ApplicationContext context){
+        Cat cat=context.getBean(Cat.class);
+        System.out.println(cat.getMouse().getName());
+    }
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        testAutowire(context);
+        testAuthroize(context);
     }
 }

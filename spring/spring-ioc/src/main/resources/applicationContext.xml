@@ -74,4 +74,10 @@
         </property>
     </bean>
 
+    <bean id="mouse" class="com.yang.study.bean.Mouse">
+        <property name="name" value="mouse"/>
+    </bean>
+
+    <bean id="cat" class="com.yang.study.bean.Cat"/>
+
 </beans>
