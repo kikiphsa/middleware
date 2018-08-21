@@ -4,6 +4,7 @@
 package com.yang.study.bean;
 
 import com.yang.study.interfaces.Happy;
+import com.yang.study.interfaces.Login;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Scu implements Happy {
         this.rank = rank;
     }
 
+    @Login
     public String happy() {
         return "scu happy!";
     }

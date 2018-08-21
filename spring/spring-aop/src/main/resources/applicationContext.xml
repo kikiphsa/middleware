@@ -20,6 +20,26 @@
         <property name="rank" value="6"/>
     </bean>
 
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>scu</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>interceptorss</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="interceptorss" class="com.yang.study.interceper.MyIntercept"/>
+
+    <aop:config proxy-target-class="true" expose-proxy="true">
+        <aop:pointcut id="pointcut" expression="@annotation(com.yang.study.interfaces.Login)"/>
+        <aop:advisor advice-ref="interceptorss" pointcut-ref="pointcut"/>
+    </aop:config>
+
     <bean id="myAspect" class="com.yang.study.apsect.MyAspect"/>
 
     <bean id="aspect" class="com.yang.study.apsect.AspectTwo"/>
@@ -27,10 +47,10 @@
     <bean id="sample" class="com.yang.study.bean.Sample">
         <property name="name" value="test"/>
     </bean>
-    
+
     <aop:config>
         <aop:aspect id="aspect" ref="myAspect">
-            <aop:pointcut id="pointcut" expression="execution(* com.yang.study.bean.Scu.*(..))"/>
+            <aop:pointcut id="pointcut" expression="@annotation(com.yang.study.interfaces.Login)"/>
             <aop:before method="before" pointcut-ref="pointcut"/>
             <aop:after method="after" pointcut-ref="pointcut"/>
         </aop:aspect>
@@ -60,4 +80,6 @@
     <bean id="userService" class="com.yang.study.service.UserService"/>
 
     <bean id="sampleService" class="com.yang.study.service.SampleService"/>
+
+    <bean id="aopBean" class="com.yang.study.bean.AopBean"/>
 </beans>

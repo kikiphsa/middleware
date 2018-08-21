@@ -2,7 +2,6 @@ package com.yang.study;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.yang.study.bean.AopBean;
 import com.yang.study.bean.Scu;
@@ -20,18 +19,18 @@ public class App {
 
     public static void testAopBeanRefer(ApplicationContext context) {
         AopBean aopBean = context.getBean(AopBean.class);
-        System.out.println(aopBean.getScu().getRank());
+        System.out.println(aopBean.getHappy().happy());
+        System.out.println(context.getBean("scu").getClass());
     }
 
     public  static  void testMysql(ApplicationContext context){
         SampleService sampleService= context.getBean(SampleService.class);
         UserService userService=context.getBean(UserService.class);
         System.out.println(sampleService.hello());
-        //System.out.println(userService.transactions());
     }
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-       testMysql(context);
+        testAopBeanRefer(context);
     }
 }

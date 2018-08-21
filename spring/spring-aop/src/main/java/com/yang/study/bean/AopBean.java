@@ -3,6 +3,10 @@
  */
 package com.yang.study.bean;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.yang.study.interfaces.Happy;
+
 /**
  *
  * @author fuyang
@@ -10,23 +14,24 @@ package com.yang.study.bean;
  */
 public class AopBean {
 
-    private Scu scu;
+    @Autowired
+    private Happy happy;
 
     /**
-     * Getter method for property <tt>scu</tt>.
+     * Getter method for property <tt>happy</tt>.
      *
-     * @return property value of scu
+     * @return property value of happy
      */
-    public Scu getScu() {
-        return scu;
+    public Happy getHappy() {
+        return happy;
     }
 
     /**
-     * Setter method for property <tt>scu</tt>.
+     * Setter method for property <tt>happy</tt>.
      *
-     * @param scu value to be assigned to property scu
+     * @param happy value to be assigned to property happy
      */
-    public void setScu(Scu scu) {
-        this.scu = scu;
+    public void setHappy(Happy happy) {
+        this.happy = happy;
     }
 }
