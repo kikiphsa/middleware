@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       default-autowire="byName"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config/>
+
+    <bean id="consumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="localhost:9092"/>
+                <entry key="group.id" value="group-0"/>
+                <entry key="enable.auto.commit" value="true"/>
+                <entry key="auto.commit.interval.ms" value="500"/>
+                <entry key="auto.offset.reset" value="earliest"/>
+                <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+                <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="consumerFactorys" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="localhost:9092"/>
+                <entry key="group.id" value="group-1"/>
+                <entry key="enable.auto.commit" value="true"/>
+                <entry key="auto.commit.interval.ms" value="500"/>
+                <entry key="auto.offset.reset" value="earliest"/>
+                <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+                <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kafkaListenContainer" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer">
+        <constructor-arg index="0" ref="consumerFactory"/>
+        <constructor-arg index="1" ref="containerProperties"/>
+        <property name="concurrency" value="3"/>
+    </bean>
+
+    <bean id="kafkaListenContainers" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer">
+        <constructor-arg index="0" ref="consumerFactorys"/>
+        <constructor-arg index="1" ref="containerProperties"/>
+        <property name="concurrency" value="3"/>
+    </bean>
+
+    <bean id="containerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <constructor-arg value="fuyang"/>
+        <property name="messageListener" ref="consumer"/>
+    </bean>
+
+    <bean id="consumer" class="com.yang.study.Consumer"/>
+
+</beans>
