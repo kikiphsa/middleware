@@ -3,6 +3,7 @@
  */
 package com.yang.study;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.listener.MessageListener;
 
 /**
@@ -12,7 +13,12 @@ import org.springframework.kafka.listener.MessageListener;
 public class Consumer implements MessageListener {
 
     public void onMessage(Object data) {
-        System.out.println(data.getClass());
-        System.out.println("receiver msg:" + data);
+        ConsumerRecord consumerRecord=(ConsumerRecord) data;
+        System.out.println(consumerRecord);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

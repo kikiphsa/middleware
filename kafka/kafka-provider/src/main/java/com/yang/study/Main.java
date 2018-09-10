@@ -12,11 +12,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Main {
 
-    public static final String TOPIC = "fuyang";
+    public static final String TOPIC = "fuyang1";
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         Producer producer = context.getBean(Producer.class);
-        producer.sendMessage(TOPIC,"hello!");
+        producer.sendMessage(TOPIC,0,"hello!");
+        producer.sendMessage(TOPIC,1,"hello!");
     }
 }

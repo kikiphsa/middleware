@@ -17,8 +17,8 @@ public class Producer {
 
     private KafkaTemplate<Object,Object>kafkaTemplate;
 
-    public void sendMessage(String topic,Object data){
-        ListenableFuture<SendResult<Object,Object>>listenableFuture=kafkaTemplate.send(topic,data);
+    public void sendMessage(String topic,int partion,Object data){
+        ListenableFuture<SendResult<Object,Object>>listenableFuture=kafkaTemplate.send(topic,partion,"key",data);
         listenableFuture.addCallback(new ListenableFutureCallback<SendResult<Object, Object>>() {
             public void onFailure(Throwable ex) {
                 System.out.println("send msg failture......");
