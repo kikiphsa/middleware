@@ -4,6 +4,7 @@
 package com.yang.study.bean;
 
 import com.yang.study.interfaces.Happy;
+import com.yang.study.interfaces.Hello;
 import com.yang.study.interfaces.Login;
 
 /**
@@ -12,7 +13,7 @@ import com.yang.study.interfaces.Login;
  * @author fuyang
  * @version $Id: Scu.java, v 0.1 2018年07月13日 下午5:28 fuyang Exp $
  */
-public class Scu implements Happy {
+public class Scu implements Happy,Hello {
 
     public Scu(){
         System.out.println("Construct Scu......");
@@ -29,8 +30,11 @@ public class Scu implements Happy {
         this.rank = rank;
     }
 
-    @Login
     public String happy() {
         return "scu happy!";
+    }
+
+    public String hello() {
+        return "hello,world!";
     }
 }

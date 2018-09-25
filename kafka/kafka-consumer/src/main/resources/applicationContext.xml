@@ -11,9 +11,9 @@
             <map>
                 <entry key="bootstrap.servers" value="localhost:9092"/>
                 <entry key="group.id" value="group-0"/>
-                <entry key="enable.auto.commit" value="true"/>
                 <entry key="auto.commit.interval.ms" value="500"/>
                 <entry key="auto.offset.reset" value="earliest"/>
+                <entry key="enable.auto.commit" value="false"/>
                 <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
                 <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
             </map>
@@ -29,6 +29,7 @@
     <bean id="containerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
         <constructor-arg value="fuyang1"/>
         <property name="messageListener" ref="consumer"/>
+        <property name="ackMode" value="MANUAL"/>
     </bean>
 
     <bean id="consumer" class="com.yang.study.Consumer"/>

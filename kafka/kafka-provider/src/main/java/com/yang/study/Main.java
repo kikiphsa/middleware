@@ -18,6 +18,5 @@ public class Main {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         Producer producer = context.getBean(Producer.class);
         producer.sendMessage(TOPIC,0,"hello!");
-        producer.sendMessage(TOPIC,1,"hello!");
     }
 }

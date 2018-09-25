@@ -5,16 +5,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.yang.study.bean.AopBean;
 import com.yang.study.bean.Scu;
+import com.yang.study.interfaces.Happy;
+import com.yang.study.interfaces.Hello;
 import com.yang.study.service.SampleService;
 import com.yang.study.service.UserService;
 
 public class App {
 
     public static void aopTest(ApplicationContext context) {
-        Scu scu = context.getBean("scu", Scu.class);
+        Hello scu = (Hello) context.getBean("scu");
         System.out.println(scu.getClass());
-        System.out.println(scu.happy());
-        System.out.println(scu.getRank());
+        System.out.println(scu.hello());
+        //System.out.println(scu.getRank());
     }
 
     public static void testAopBeanRefer(ApplicationContext context) {
@@ -31,6 +33,6 @@ public class App {
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        testAopBeanRefer(context);
+        aopTest(context);
     }
 }
