@@ -14,6 +14,7 @@
         <module>redis</module>
         <module>kafka/kafka-provider</module>
         <module>kafka/kafka-consumer</module>
+        <module>zookeeper</module>
     </modules>
     <packaging>pom</packaging>
 
