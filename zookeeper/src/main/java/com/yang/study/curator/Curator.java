@@ -9,6 +9,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
+import org.apache.curator.framework.recipes.cache.*;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
@@ -95,24 +96,59 @@ public class Curator {
 
     private void setData(String path, byte[] data) {
         try {
+            System.out.println("setdata");
             curatorFramework.setData().withVersion(-1).forPath(path, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // watcher
+
+    private NodeCache reigisterNodeDateChangeListener(String path) {
+        final NodeCache nodeCache = new NodeCache(curatorFramework, path, false);
+        nodeCache.getListenable().addListener(new NodeCacheListener() {
+            public void nodeChanged() throws Exception {
+                System.out.println("changed: " + new String(nodeCache.getCurrentData().getData()));
+            }
+        });
+        return nodeCache;
+    }
+
+    private PathChildrenCache reigisterChildChangeListener(String path) {
+        final PathChildrenCache cache = new PathChildrenCache(curatorFramework, path, true);
+        cache.getListenable().addListener(new PathChildrenCacheListener() {
+            public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent pathChildrenCacheEvent) throws Exception {
+                System.out.println(pathChildrenCacheEvent);
+            }
+        });
+        return cache;
+    }
+
     public static void main(String[] args) {
         Curator curator = new Curator("localhost", 1000, 1000);
         curator.connect();
+        PathChildrenCache cache = curator.reigisterChildChangeListener("/fuyang");
+        try {
+            cache.start(PathChildrenCache.StartMode.BUILD_INITIAL_CACHE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         curator.create("/fuyang/curator", "test".getBytes(), CreateMode.EPHEMERAL);
+        NodeCache nodeCache = curator.reigisterNodeDateChangeListener("/fuyang/curator");
         System.out.println(new String(curator.getData("/fuyang/curator")));
+        try {
+            nodeCache.start(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         curator.setData("/fuyang/curator", "test2".getBytes());
-        System.out.println(new String(curator.getData("/fuyang/curator")));
-        System.out.println(curator.exists("/fuyang/curator"));
-        System.out.println(curator.getChildren("/fuyang"));
+        //System.out.println(new String(curator.getData("/fuyang/curator")));
+        //System.out.println(curator.exists("/fuyang/curator"));
+        //System.out.println(curator.getChildren("/fuyang"));
         curator.delete("/fuyang/curator");
-        System.out.println(curator.exists("/fuyang/curator"));
-        curator.createInBackGround("/fuyang/curators", "test".getBytes());
+        //System.out.println(curator.exists("/fuyang/curator"));
+        //curator.createInBackGround("/fuyang/curators", "test".getBytes());
         curator.close();
     }
 }
