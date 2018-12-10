@@ -18,12 +18,12 @@
             <artifactId>zookeeper</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.101tec</groupId>
+            <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.sgroschupf</groupId>
-            <artifactId>zkclient</artifactId>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
         </dependency>
     </dependencies>
 </project>
