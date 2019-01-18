@@ -67,8 +67,9 @@ public class ZkClientTest {
 
     public static void main(String[] args) {
         ZkClientTest zkClientTest = new ZkClientTest("localhost:2181", 3000);
-        zkClientTest.dataChangeListener("/fuyang/zz");
-        zkClientTest.childChangeListener("/fuyang/zz");
+        zkClientTest.createNode("/fuyang","fuyang");
+        zkClientTest.dataChangeListener("/fuyang");
+        zkClientTest.childChangeListener("/fuyang");
         zkClientTest.createNode("/fuyang/zz","fuyang");
         try {
             Thread.sleep(3000);
