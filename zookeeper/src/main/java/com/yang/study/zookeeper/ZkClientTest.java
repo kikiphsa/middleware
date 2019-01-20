@@ -25,6 +25,14 @@ public class ZkClientTest {
         zkClient.createPersistent(path, data);
     }
 
+    private void create(String path, Object data) {
+        zkClient.createEphemeral(path, data);
+    }
+
+    public List<String> getChild(String path) {
+        return zkClient.getChildren(path);
+    }
+
     private String getData(String path) {
         return zkClient.readData(path);
     }
@@ -67,10 +75,9 @@ public class ZkClientTest {
 
     public static void main(String[] args) {
         ZkClientTest zkClientTest = new ZkClientTest("localhost:2181", 3000);
-        zkClientTest.createNode("/fuyang","fuyang");
-        zkClientTest.dataChangeListener("/fuyang");
-        zkClientTest.childChangeListener("/fuyang");
-        zkClientTest.createNode("/fuyang/zz","fuyang");
+        zkClientTest.createNode("/rpc/service/com.yang.study.facade.HelloFacade",null);
+        zkClientTest.createNode("/rpc/service/com.yang.study.facade.HelloFacade/localhost:8080",null);
+        System.out.println(zkClientTest.getChild("/rpc/service/com.yang.study.facade.HelloFacade"));
         try {
             Thread.sleep(3000);
             System.out.println("test");

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       default-autowire="byName"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config/>
+
+    <bean id="transPortService" class="com.yang.study.network.TransPortServiceImpl"/>
+
+    <bean id="proxyService" class="com.yang.study.proxy.ProxyServiceImpl">
+        <property name="invocationHandler" ref="invocationHandler"/>
+    </bean>
+
+    <bean id="workQueue" class="java.util.concurrent.LinkedBlockingQueue"/>
+
+    <bean id="invocationHandler" class="com.yang.study.proxy.RpcInvocationHandler">
+        <property name="executorService">
+            <bean class="java.util.concurrent.ThreadPoolExecutor">
+                <constructor-arg name="corePoolSize" value="10"/>
+                <constructor-arg name="maximumPoolSize" value="10"/>
+                <constructor-arg name="keepAliveTime" value="10"/>
+                <constructor-arg name="unit" value="SECONDS"/>
+                <constructor-arg name="workQueue" ref="workQueue"/>
+            </bean>
+        </property>
+        <property name="transPortService" ref="transPortService"/>
+        <property name="registerService" ref="registerService"/>
+    </bean>
+
+    <bean id="registerService" class="com.yang.study.register.RegisterServiceImpl"/>
+
+    <bean id="zkClientService" class="com.yang.study.zk.ZkClientServiceImpl" init-method="init">
+        <property name="address" value="127.0.0.1:2181"/>
+        <property name="registerService" ref="registerService"/>
+    </bean>
+</beans>

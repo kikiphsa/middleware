@@ -3,6 +3,7 @@
  */
 package com.yang.study.proxy;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
@@ -11,18 +12,18 @@ import java.lang.reflect.Proxy;
  */
 public class ProxyServiceImpl implements ProxyService {
 
-    private RpcInvocationHandler rpcInvocationHandler;
+    private InvocationHandler invocationHandler;
 
     public <T> T createProxy(Class<T> clazz) {
-        return (T)Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), rpcInvocationHandler);
+        return (T)Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, invocationHandler);
     }
 
     /**
-     * Setter method for property <tt>rpcInvocationHandler</tt>.
+     * Setter method for property <tt>invocationHandler</tt>.
      *
-     * @param rpcInvocationHandler value to be assigned to property rpcInvocationHandler
+     * @param invocationHandler value to be assigned to property invocationHandler
      */
-    public void setRpcInvocationHandler(RpcInvocationHandler rpcInvocationHandler) {
-        this.rpcInvocationHandler = rpcInvocationHandler;
+    public void setInvocationHandler(InvocationHandler invocationHandler) {
+        this.invocationHandler = invocationHandler;
     }
 }

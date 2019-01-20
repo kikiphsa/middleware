@@ -36,7 +36,7 @@ public class TransPortServiceImpl implements TransPortService {
                 inputStream.close();
                 outputStream.close();
                 socket.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

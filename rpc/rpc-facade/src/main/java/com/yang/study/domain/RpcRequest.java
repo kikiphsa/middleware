@@ -11,6 +11,8 @@ public class RpcRequest {
 
     private long requestId;
 
+    private String service;
+
     private String methodName;
 
     private Class<?>[] parameterTypes;
@@ -87,5 +89,23 @@ public class RpcRequest {
      */
     public void setParameters(Object[] parameters) {
         this.parameters = parameters;
+    }
+
+    /**
+     * Getter method for property <tt>service</tt>.
+     *
+     * @return property value of service
+     */
+    public String getService() {
+        return service;
+    }
+
+    /**
+     * Setter method for property <tt>service</tt>.
+     *
+     * @param service value to be assigned to property service
+     */
+    public void setService(String service) {
+        this.service = service;
     }
 }

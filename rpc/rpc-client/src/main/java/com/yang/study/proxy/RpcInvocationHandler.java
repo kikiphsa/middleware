@@ -13,12 +13,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.yang.study.domain.RpcRequest;
 import com.yang.study.domain.RpcResponse;
 import com.yang.study.network.TransPortService;
+import com.yang.study.register.RegisterService;
 
 /**
  * @author fuyang
  * @version $Id: RpcInvocationHandler.java, v 0.1 2019年01月18日 4:09 PM fuyang Exp $
  */
 public class RpcInvocationHandler implements InvocationHandler {
+
+    private RegisterService registerService;
 
     private TransPortService transPortService;
 
@@ -31,11 +34,18 @@ public class RpcInvocationHandler implements InvocationHandler {
             @Override
             public RpcResponse call() {
                 RpcRequest rpcRequest = new RpcRequest();
+                rpcRequest.setService(proxy.getClass().getName());
                 rpcRequest.setMethodName(method.getName());
                 rpcRequest.setRequestId(atomicLong.get());
                 rpcRequest.setParameters(args);
                 rpcRequest.setParameterTypes(method.getParameterTypes());
-                return transPortService.transport("", 0, rpcRequest);
+                String address = registerService.getServiceAddress(method.getDeclaringClass().getName());
+                if (address == null) {
+                    System.out.println("no service avalibale......");
+                    return null;
+                }
+                String[] array = address.split(":");
+                return transPortService.transport(array[0], Integer.parseInt(array[1]), rpcRequest);
             }
         });
         return future.get();
@@ -57,5 +67,14 @@ public class RpcInvocationHandler implements InvocationHandler {
      */
     public void setExecutorService(ExecutorService executorService) {
         this.executorService = executorService;
+    }
+
+    /**
+     * Setter method for property <tt>registerService</tt>.
+     *
+     * @param registerService value to be assigned to property registerService
+     */
+    public void setRegisterService(RegisterService registerService) {
+        this.registerService = registerService;
     }
 }
