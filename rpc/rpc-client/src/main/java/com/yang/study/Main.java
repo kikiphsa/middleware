@@ -20,6 +20,12 @@ public class Main {
         ProxyService proxyService = context.getBean(ProxyService.class);
         HelloFacade helloFacade = proxyService.createProxy(HelloFacade.class);
         System.out.println(helloFacade.hello("hello"));
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(helloFacade.world("world"));
         ((ClassPathXmlApplicationContext) context).close();
     }
 }

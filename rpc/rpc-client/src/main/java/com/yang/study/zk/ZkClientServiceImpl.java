@@ -69,12 +69,12 @@ public class ZkClientServiceImpl implements ZkClientService {
         zkClient.subscribeDataChanges(path, new IZkDataListener() {
             @Override
             public void handleDataChange(String s, Object o) throws Exception {
-                System.out.println("data changed, path=:" + s + ",data=" + o);
+                System.out.println("data changed, path=" + s + ",data=" + o);
             }
 
             @Override
             public void handleDataDeleted(String s) throws Exception {
-                System.out.println("data deleted, path=:" + s + ",data=");
+                System.out.println("data deleted, path=" + s);
             }
         });
     }
@@ -87,7 +87,7 @@ public class ZkClientServiceImpl implements ZkClientService {
                     String service = s.substring(ROOT.length() + 1);
                     registerService.setService(service, list);
                 }
-                System.out.println("childs changed, path=:" + s + ",data=" + list);
+                System.out.println("childs changed, path=" + s + ",data=" + list);
             }
         });
     }

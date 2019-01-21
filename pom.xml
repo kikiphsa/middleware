@@ -17,6 +17,7 @@
         <module>zookeeper</module>
         <module>rpc/rpc-facade</module>
         <module>rpc/rpc-client</module>
+        <module>rpc/rpc-server</module>
     </modules>
     <packaging>pom</packaging>
 

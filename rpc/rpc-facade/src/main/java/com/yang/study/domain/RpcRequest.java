@@ -3,11 +3,13 @@
  */
 package com.yang.study.domain;
 
+import java.io.Serializable;
+
 /**
  * @author fuyang
  * @version $Id: RpcRequest.java, v 0.1 2019年01月18日 3:48 PM fuyang Exp $
  */
-public class RpcRequest {
+public class RpcRequest implements Serializable {
 
     private long requestId;
 

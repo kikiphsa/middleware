@@ -75,6 +75,7 @@ public class ZkClientTest {
 
     public static void main(String[] args) {
         ZkClientTest zkClientTest = new ZkClientTest("localhost:2181", 3000);
+        zkClientTest.delete("/rpc/service");
         zkClientTest.createNode("/rpc/service/com.yang.study.facade.HelloFacade",null);
         zkClientTest.createNode("/rpc/service/com.yang.study.facade.HelloFacade/localhost:8080",null);
         System.out.println(zkClientTest.getChild("/rpc/service/com.yang.study.facade.HelloFacade"));

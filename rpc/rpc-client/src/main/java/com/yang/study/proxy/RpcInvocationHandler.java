@@ -30,22 +30,21 @@ public class RpcInvocationHandler implements InvocationHandler {
     private ExecutorService executorService;
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Future<RpcResponse> future = executorService.submit(new Callable<RpcResponse>() {
+        Future<Object> future = executorService.submit(new Callable<Object>() {
             @Override
-            public RpcResponse call() {
+            public Object call() {
                 RpcRequest rpcRequest = new RpcRequest();
-                rpcRequest.setService(proxy.getClass().getName());
+                rpcRequest.setService(method.getDeclaringClass().getName());
                 rpcRequest.setMethodName(method.getName());
                 rpcRequest.setRequestId(atomicLong.get());
                 rpcRequest.setParameters(args);
                 rpcRequest.setParameterTypes(method.getParameterTypes());
                 String address = registerService.getServiceAddress(method.getDeclaringClass().getName());
                 if (address == null) {
-                    System.out.println("no service avalibale......");
                     return null;
                 }
                 String[] array = address.split(":");
-                return transPortService.transport(array[0], Integer.parseInt(array[1]), rpcRequest);
+                return transPortService.transport(array[0], Integer.parseInt(array[1]), rpcRequest).getResult();
             }
         });
         return future.get();

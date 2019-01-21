@@ -3,13 +3,15 @@
  */
 package com.yang.study.domain;
 
+import java.io.Serializable;
+
 /**
  * @author fuyang
  * @version $Id: RpcResponse.java, v 0.1 2019年01月18日 3:50 PM fuyang Exp $
  */
-public class RpcResponse {
+public class RpcResponse implements Serializable {
 
-    private String requestId;
+    private long requestId;
 
     private Object result;
 
@@ -18,7 +20,7 @@ public class RpcResponse {
      *
      * @return property value of requestId
      */
-    public String getRequestId() {
+    public long getRequestId() {
         return requestId;
     }
 
@@ -27,7 +29,7 @@ public class RpcResponse {
      *
      * @param requestId value to be assigned to property requestId
      */
-    public void setRequestId(String requestId) {
+    public void setRequestId(long requestId) {
         this.requestId = requestId;
     }
 

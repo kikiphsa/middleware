@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface ZkClientService {
 
+    public static final String ROOT = "/rpc/service";
+
     boolean exist(String path);
 
     void createPersistent(String path, Object data);
@@ -25,5 +27,5 @@ public interface ZkClientService {
     void write(String path, Object data);
 
     List<String> getChilds(String path);
-
+    
 }
