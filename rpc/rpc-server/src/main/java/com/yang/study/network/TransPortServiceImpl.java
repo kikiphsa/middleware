@@ -3,9 +3,9 @@
  */
 package com.yang.study.network;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import com.yang.study.domain.RpcRequest;
 import com.yang.study.domain.RpcResponse;
 import com.yang.study.handler.RpcHandler;
+import com.yang.study.util.KryoUtil;
 
 /**
  * @author fuyang
@@ -33,17 +34,21 @@ public class TransPortServiceImpl implements TransPortService {
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        ObjectOutputStream outputStream = null;
-                        ObjectInputStream inputStream = null;
+                        DataOutputStream outputStream = null;
+                        DataInputStream inputStream = null;
                         try {
-                            outputStream = new ObjectOutputStream(socket.getOutputStream());
-                            inputStream = new ObjectInputStream(socket.getInputStream());
-                            RpcRequest rpcRequest = (RpcRequest) inputStream.readObject();
+                            outputStream = new DataOutputStream(socket.getOutputStream());
+                            inputStream = new DataInputStream(socket.getInputStream());
+                            int length = inputStream.readInt();
+                            byte[] data = new byte[length];
+                            inputStream.read(data);
+                            RpcRequest rpcRequest = KryoUtil.deserializer(data, RpcRequest.class);
                             RpcResponse rpcResponse = rpcHandler.handler(rpcRequest);
-                            outputStream.writeObject(rpcResponse);
+                            data = KryoUtil.serializer(rpcResponse);
+                            outputStream.writeInt(data.length);
+                            outputStream.write(data);
+                            outputStream.flush();
                         } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
                             e.printStackTrace();
                         } finally {
                             try {

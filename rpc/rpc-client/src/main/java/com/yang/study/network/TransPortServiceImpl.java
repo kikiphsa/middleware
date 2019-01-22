@@ -3,12 +3,13 @@
  */
 package com.yang.study.network;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import com.yang.study.domain.RpcResponse;
+import com.yang.study.util.KryoUtil;
 
 /**
  * @author fuyang
@@ -19,17 +20,21 @@ public class TransPortServiceImpl implements TransPortService {
     @Override
     public RpcResponse transport(String ip, int port, Object data) {
         Socket socket = null;
-        ObjectOutputStream outputStream = null;
-        ObjectInputStream inputStream = null;
+        DataOutputStream outputStream = null;
+        DataInputStream inputStream = null;
         try {
             socket = new Socket(ip, port);
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
-            outputStream.writeObject(data);
-            inputStream = new ObjectInputStream(socket.getInputStream());
-            return (RpcResponse) inputStream.readObject();
+            outputStream = new DataOutputStream(socket.getOutputStream());
+            byte[] bytes = KryoUtil.serializer(data);
+            outputStream.writeInt(bytes.length);
+            outputStream.write(bytes);
+            outputStream.flush();
+            inputStream = new DataInputStream(socket.getInputStream());
+            int length = inputStream.readInt();
+            bytes = new byte[length];
+            inputStream.read(bytes);
+            return KryoUtil.deserializer(bytes, RpcResponse.class);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

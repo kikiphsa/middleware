@@ -4,6 +4,7 @@
 package com.yang.study.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author fuyang
@@ -109,5 +110,16 @@ public class RpcRequest implements Serializable {
      */
     public void setService(String service) {
         this.service = service;
+    }
+
+    @Override
+    public String toString() {
+        return "RpcRequest{" +
+                "requestId=" + requestId +
+                ", service='" + service + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", parameterTypes=" + Arrays.toString(parameterTypes) +
+                ", parameters=" + Arrays.toString(parameters) +
+                '}';
     }
 }
