@@ -18,6 +18,8 @@
         <module>rpc/rpc-facade</module>
         <module>rpc/rpc-client</module>
         <module>rpc/rpc-server</module>
+        <module>netty/netty-client</module>
+        <module>netty/netty-server</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -149,6 +151,16 @@
                 <groupId>com.esotericsoftware</groupId>
                 <artifactId>kryo</artifactId>
                 <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.33.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.msgpack</groupId>
+                <artifactId>msgpack</artifactId>
+                <version>0.6.12</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
