@@ -18,6 +18,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * @author fuyang
@@ -35,12 +36,10 @@ public class ChatServer {
                 new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        //socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
-                        //socketChannel.pipeline().addLast(new StringDecoder());
                         socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65535,0,2,0,2));
-                        socketChannel.pipeline().addLast(new MessagePackDecoder());
+                        socketChannel.pipeline().addLast(new StringDecoder());
                         socketChannel.pipeline().addLast(new LengthFieldPrepender(2));
-                        socketChannel.pipeline().addLast(new MessagePackEncoder());
+                        socketChannel.pipeline().addLast(new StringEncoder());
                         socketChannel.pipeline().addLast(new ChannelHandlerSample());
                     }
                 });

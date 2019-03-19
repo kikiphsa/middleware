@@ -3,10 +3,15 @@
  */
 package com.yang.study.netty.handler;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
  * @author fuyang
@@ -14,20 +19,46 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class ChannelHandlerSample extends ChannelInboundHandlerAdapter {
 
-    private int count;
+    private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
+    private static final Map<String, String> userNamesMap = new HashMap<>();
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //ByteBuf byteBuf = (ByteBuf) msg;
-        //byte[] data = new byte[byteBuf.readableBytes()];
-        //byteBuf.readBytes(data);
-        System.out.println("resquest:" + msg + ",count=" + ++count);
-        ctx.write(msg);
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        channelGroup.add(ctx.channel());
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.flush();
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        String name = userNamesMap.get(ctx.channel().remoteAddress().toString());
+        System.out.println("【" + name + "】离开群聊");
+        channelGroup.remove(ctx.channel());
+        userNamesMap.remove(ctx.channel().remoteAddress().toString());
+        for (Channel channel : channelGroup) {
+            channel.writeAndFlush("【" + name + "】离开群聊");
+        }
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        String[] data = ((String) msg).split(":");
+        if (data.length == 1) {
+            for (Channel channel : channelGroup) {
+                if (channel != ctx.channel()) {
+                    channel.writeAndFlush("【" + userNamesMap.get(ctx.channel().remoteAddress().toString()) + "】:" + msg);
+                } else {
+                    channel.writeAndFlush("【我】:" + msg);
+                }
+            }
+        } else {
+            userNamesMap.put(ctx.channel().remoteAddress().toString(), data[1]);
+            System.out.println("【" + data[1] + "】加入群聊");
+            for (Channel channel : channelGroup) {
+                if (channel != ctx.channel()) {
+                    channel.writeAndFlush("【" + data[1] + "】加入群聊");
+                }
+            }
+        }
     }
 
     @Override

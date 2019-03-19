@@ -3,9 +3,6 @@
  */
 package com.yang.study.netty.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -15,25 +12,20 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class ChannelHandlerSample extends ChannelInboundHandlerAdapter {
 
-    private int count;
+    private String name;
+
+    public ChannelHandlerSample(String name) {
+        this.name = name;
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        for (int i = 0; i < 100; i++) {
-            List<String> list = new ArrayList<>();
-            list.add("" + i);
-            ctx.write(list);
-        }
-        ctx.flush();
+        ctx.writeAndFlush("name:" + name);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //ByteBuf byteBuf = (ByteBuf) msg;
-        //byte[] data = new byte[byteBuf.readableBytes()];
-        //byteBuf.readBytes(data);
-        System.out.println("response:" + msg + ",count=" + ++count);
-        ctx.writeAndFlush(msg);
+        System.out.println(msg);
     }
 
     @Override
